@@ -49,6 +49,9 @@ import de.iterable.teavm.jquery.types.JQuerySupport;
 */
 public final class JQuery {
 
+    private JQuery() {
+    }
+    
     @JSBody(params = { "selector" }, script = "return jQuery(selector)")
     public static native JQueryObject create(String selector);
 

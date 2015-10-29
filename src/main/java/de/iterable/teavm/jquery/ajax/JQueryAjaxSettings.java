@@ -18,6 +18,7 @@ package de.iterable.teavm.jquery.ajax;
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
 import org.teavm.jso.JSProperty;
+import org.teavm.jso.core.JSString;
 
 import de.iterable.teavm.jquery.ajax.handler.AjaxBeforeSendHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxCompleteHandler;
@@ -27,6 +28,7 @@ import de.iterable.teavm.jquery.ajax.handler.AjaxFilterHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxStatusCodeHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxSuccessHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxXhrFunctionHandler;
+import de.iterable.teavm.jquery.misc.JSFunctor0;
 
 /**
 *
@@ -112,8 +114,8 @@ public abstract class JQueryAjaxSettings implements JSObject {
     @JSProperty
     public abstract void setJsonpCallback(String jsonpCallback);
 
-    // @JSProperty
-    // public abstract void setJsonpCallback(Function0 jsonpCallback);
+    @JSProperty
+    public abstract void setJsonpCallback(JSFunctor0<JSString> jsonpCallback);
 
     @JSProperty
     public abstract void setMimeType(String mimeType);
@@ -148,7 +150,7 @@ public abstract class JQueryAjaxSettings implements JSObject {
     @JSProperty
     public abstract void setXhr(AjaxXhrFunctionHandler handler);
 
-    // @JSProperty
-    // public abstract void setXhrFields();
+    @JSProperty
+    public abstract <T extends JSObject> void setXhrFields(T xhrFields);
 
 }
