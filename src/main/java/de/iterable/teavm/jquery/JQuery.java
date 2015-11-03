@@ -23,6 +23,7 @@ import org.teavm.jso.core.JSFunction;
 import org.teavm.jso.core.JSNumber;
 import org.teavm.jso.core.JSString;
 import org.teavm.jso.core.utils.JSArrayUtils;
+import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.xml.Element;
 import org.teavm.jso.dom.xml.Node;
 
@@ -51,12 +52,24 @@ public final class JQuery {
 
     private JQuery() {
     }
-    
+
     @JSBody(params = { "selector" }, script = "return jQuery(selector)")
     public static native JQueryObject create(String selector);
 
     @JSBody(params = { "element" }, script = "return jQuery(element)")
     public static native JQueryObject create(Node element);
+
+    @JSBody(params = { "selector", "context" }, script = "return jQuery(element, context)")
+    public static native JQueryObject create(String selector, Node context);
+
+    @JSBody(params = { "selector", "context" }, script = "return jQuery(element, context)")
+    public static native JQueryObject create(String selector, JQueryObject context);
+
+    @JSBody(params = { "html" }, script = "return jQuery(html)")
+    public static native JQueryObject createByHtml(String html);
+
+    @JSBody(params = { "html", "ownerDocument" }, script = "return jQuery(html, ownerDocument)")
+    public static native JQueryObject createByHtml(String html, HTMLDocument ownerDocument);
 
     @JSBody(params = { "url" }, script = "return jQuery.getJSON(url)")
     public static native JQueryXHR getJSON(String url);
@@ -76,14 +89,14 @@ public final class JQuery {
     @JSBody(params = { "url", "handler" }, script = "return jQuery.getScript(url, handler)")
     public static native JQueryXHR getScript(String url, AjaxSuccessHandler<JSString> handler);
 
+    @JSBody(params = { "url", "settings" }, script = "return jQuery.ajax(url, settings)")
+    public static native JQueryXHR ajax(String url, JQueryAjaxSettings settings);
+
     @JSBody(params = { "settings" }, script = "return jQuery.ajax(settings)")
     public static native JQueryXHR ajax(JQueryAjaxSettings settings);
 
     @JSBody(params = {}, script = "return jQuery.Deferred()")
     public static native JQueryDeferred Deferred();
-
-    @JSBody(params = { "url", "settings" }, script = "return jQuery.ajax(url, settings)")
-    public static native JQueryXHR ajax(String url, JQueryAjaxSettings settings);
 
     @JSBody(params = { "dataTypes", "handler" }, script = "return jQuery.ajaxPrefilter(dataTypes, handler)")
     public static native void ajaxPrefilter(String dataTypes, AjaxPrefilterHandler handler);
@@ -284,5 +297,5 @@ public final class JQuery {
 
     @JSBody(params = {}, script = "return jQuery.fx")
     public static native JQueryFxObject fx();
-    
+
 }
