@@ -38,6 +38,8 @@ settings.setCompleteHandler(new AjaxCompleteHandler() {
       //Console.log("onComplete");
    }
 });
+
+JQuery.ajax(settings);
 ```
 
 
