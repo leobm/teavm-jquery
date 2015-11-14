@@ -3,11 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-	    <groupId>de.iterable</groupId>
-			<artifactId>teavm-jquery</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+		<groupId>de.iterable</groupId>
+		<artifactId>teavm-jquery</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+
 	<artifactId>teavm-jquery-demos</artifactId>
 	<packaging>pom</packaging>
+
+	<modules>
+		<module>ajax</module>
+	</modules>
 
 </project>

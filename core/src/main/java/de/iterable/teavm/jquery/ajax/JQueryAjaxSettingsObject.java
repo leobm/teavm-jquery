@@ -18,6 +18,7 @@ package de.iterable.teavm.jquery.ajax;
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
 import org.teavm.jso.JSProperty;
+import org.teavm.jso.core.JSArray;
 import org.teavm.jso.core.JSString;
 
 import de.iterable.teavm.jquery.ajax.handler.AjaxBeforeSendHandler;
@@ -69,12 +70,10 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     @JSProperty
     public abstract void setContext(JSObject context);
 
-    @JSBody(params = {
-            "dataTypeKey" }, script = "this['contents']=(this['contents']||{});this['contents']['csv']=/csv/;")
+    @JSBody(params = { "dataTypeKey" }, script = "this['contents']=(this['contents']||{});this['contents']['csv']=/csv/;")
     public final native void addContent(String dataTypeKey);
 
-    @JSBody(params = { "dataTypeKey",
-            "converter" }, script = "this['converters']=(this['converters']||{});this['converters'][dataTypeKey]=converter;")
+    @JSBody(params = { "dataTypeKey", "converter" }, script = "this['converters']=(this['converters']||{});this['converters'][dataTypeKey]=converter;")
     public final native void addCoverter(String dataTypeKey, AjaxConverterHandler converter);
 
     @JSProperty
@@ -82,6 +81,9 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
 
     @JSProperty
     public abstract void setData(JSDictonary data);
+
+    @JSProperty
+    public abstract void setData(JSArray<JSObject> data);
 
     @JSProperty
     public abstract void setData(String data);
@@ -102,9 +104,8 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     @JSProperty
     public abstract void setGlobal(boolean isGlobal);
 
-    @JSBody(params = { "headerKey",
-            "headerValue" }, script = "this['headers']=(this['headers']||{});this['headers'][headerKey]=headerValue;")
-    public final native void addHeader(String headerKey, String headerValue);
+    @JSProperty
+    public final native void setHeaders(JSDictonary headers);
 
     @JSProperty
     public abstract void setIfModified(boolean isIfModified);
@@ -122,6 +123,9 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     public abstract void setJsonpCallback(JSFunctor0<JSString> jsonpCallback);
 
     @JSProperty
+    public abstract void setMethod(String method);
+
+    @JSProperty
     public abstract void setMimeType(String mimeType);
 
     @JSProperty
@@ -134,7 +138,7 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     public abstract void setScriptCharset(String scriptCharset);
 
     @JSProperty
-    public abstract void setStatusCode(int statusCode, AjaxStatusCodeHandler handler);
+    public abstract void setStatusCode(JSDictonary statusCode);
 
     @JSProperty("success")
     public abstract void setSuccessHandler(AjaxSuccessHandler<?> handler);

@@ -17,10 +17,10 @@
 	</properties>
 
 	<modules>
-	    <module>core</module>
-			<module>utils</module>
-	    <module>demos</module>
-  </modules>
+		<module>core</module>
+		<module>utils</module>
+		<module>demos</module>
+	</modules>
 
 	<dependencies>
 		<!-- TeaVM -->

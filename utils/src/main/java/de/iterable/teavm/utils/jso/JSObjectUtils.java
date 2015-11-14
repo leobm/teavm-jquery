@@ -17,6 +17,7 @@ package de.iterable.teavm.utils.jso;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
+import org.teavm.jso.core.JSString;
 
 /**
 *
@@ -39,7 +40,7 @@ public final class JSObjectUtils {
     public static native void delete(JSObject obj, String prop);
 
     @JSBody(params = { "obj", "callback" }, script = "for (var prop in obj) {callback.apply(obj, [prop, obj]);}")
-    public static native void forIn(JSObject obj, JSForInCallback<?> callback);
+    public static native <P extends JSObject> void forIn(JSObject obj, JSForInCallback<P> callback);
 
     @JSBody(params = { "obj" }, script = "return Object.prototype.toString.call(obj) === '[object Array]';")
     public static native boolean isJSArray(JSObject obj);
@@ -56,8 +57,7 @@ public final class JSObjectUtils {
     @JSBody(params = { "obj" }, script = "return Object.prototype.toString.call(obj) === '[object RegExp]';")
     public static native boolean isJSRegExp(JSObject obj);
 
-    @JSBody(params = { "obj" }, script = "return  obj === true || obj === false "
-            + "|| Object.prototype.toString.call(obj) === '[object Boolean]';")
+    @JSBody(params = { "obj" }, script = "return  obj === true || obj === false " + "|| Object.prototype.toString.call(obj) === '[object Boolean]';")
     public static native boolean isJSBoolean(JSObject obj);
 
 }
