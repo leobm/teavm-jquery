@@ -23,10 +23,8 @@ import org.teavm.jso.core.JSString;
 
 import de.iterable.teavm.jquery.ajax.handler.AjaxBeforeSendHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxCompleteHandler;
-import de.iterable.teavm.jquery.ajax.handler.AjaxConverterHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxErrorHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxFilterHandler;
-import de.iterable.teavm.jquery.ajax.handler.AjaxStatusCodeHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxSuccessHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxXhrFunctionHandler;
 import de.iterable.teavm.utils.functor.JSFunctor0;
@@ -50,16 +48,14 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     @JSProperty
     public abstract void setAsync(boolean isAsync);
 
-    public abstract void setBeforeSend(AjaxBeforeSendHandler handler);
+    @JSProperty("beforeSend")
+    public abstract void setBeforeSendHandler(AjaxBeforeSendHandler handler);
 
     @JSProperty
     public abstract void setCache(boolean isCache);
 
     @JSProperty("complete")
     public abstract void setCompleteHandler(AjaxCompleteHandler handler);
-
-    @JSProperty
-    public abstract void setContents(JSDictonary contents);
 
     @JSProperty
     public abstract void setContentType(boolean hasContentType);
@@ -70,11 +66,11 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     @JSProperty
     public abstract void setContext(JSObject context);
 
-    @JSBody(params = { "dataTypeKey" }, script = "this['contents']=(this['contents']||{});this['contents']['csv']=/csv/;")
-    public final native void addContent(String dataTypeKey);
+    @JSProperty
+    public final native void setContents(JSDictonary contents);
 
-    @JSBody(params = { "dataTypeKey", "converter" }, script = "this['converters']=(this['converters']||{});this['converters'][dataTypeKey]=converter;")
-    public final native void addCoverter(String dataTypeKey, AjaxConverterHandler converter);
+    @JSProperty
+    public final native void setConverters(JSDictonary converters);
 
     @JSProperty
     public abstract void setCrossDomain(boolean crossDomain);
@@ -92,11 +88,7 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     public abstract void setDataFilter(AjaxFilterHandler filter);
 
     @JSProperty
-    protected abstract void setDataType(String dataType);
-
-    public void setDataType(JQueryAjaxDataType dataType) {
-        setDataType(dataType.getValue());
-    }
+    public abstract void setDataType(String dataType);
 
     @JSProperty("error")
     public abstract void setErrorHandler(AjaxErrorHandler handler);
@@ -141,10 +133,10 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     public abstract void setStatusCode(JSDictonary statusCode);
 
     @JSProperty("success")
-    public abstract void setSuccessHandler(AjaxSuccessHandler<?> handler);
+    public abstract <T extends JSObject> void setSuccessHandler(AjaxSuccessHandler<T> handler);
 
     @JSProperty
-    public abstract void setTimeout(long timeout);
+    public abstract void setTimeout(int timeout);
 
     @JSProperty
     public abstract void setTraditional(boolean traditional);
@@ -156,9 +148,12 @@ public abstract class JQueryAjaxSettingsObject implements JSObject {
     public abstract void setUrl(String url);
 
     @JSProperty
+    public abstract void setUsername(String username);
+
+    @JSProperty
     public abstract void setXhr(AjaxXhrFunctionHandler handler);
 
     @JSProperty
-    public abstract <T extends JSObject> void setXhrFields(T xhrFields);
+    public abstract void setXhrFields(JSDictonary fields);
 
 }
