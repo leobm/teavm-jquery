@@ -1,9 +1,2 @@
-.directory
-.project
-.settings
-.classpath
-.factorypath
-.checkstyle
-.cache-main
 target
 /bin/

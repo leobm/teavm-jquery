@@ -8,6 +8,9 @@ import de.iterable.teavm.jquery.JQuery;
 import de.iterable.teavm.jquery.ajax.handler.AjaxBeforeSendHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxCompleteHandler;
 import de.iterable.teavm.jquery.ajax.handler.AjaxErrorHandler;
+import de.iterable.teavm.jquery.ajax.handler.AjaxFilterHandler;
+import de.iterable.teavm.jquery.ajax.handler.AjaxSuccessHandler;
+import de.iterable.teavm.jquery.ajax.handler.AjaxXhrFunctionHandler;
 import de.iterable.teavm.utils.jso.JSDictonary;
 
 public class JQueryAjaxSettings {
@@ -44,7 +47,7 @@ public class JQueryAjaxSettings {
     }
 
     public JQueryAjaxSettings onBeforeSend(AjaxBeforeSendHandler handler) {
-        instance.setBeforeSend(handler);
+        instance.setBeforeSendHandler(handler);
         return this;
     }
 
@@ -62,6 +65,11 @@ public class JQueryAjaxSettings {
         final JSDictonary dict = JSDictonary.create();
         contentsBuilder.accept(dict);
         instance.setContents(dict);
+        return this;
+    }
+
+    public JQueryAjaxSettings contentType(boolean hasContentType) {
+        instance.setContentType(hasContentType);
         return this;
     }
 
@@ -96,6 +104,16 @@ public class JQueryAjaxSettings {
 
     public JQueryAjaxSettings data(String data) {
         instance.setData(data);
+        return this;
+    }
+
+    public JQueryAjaxSettings dataFilter(AjaxFilterHandler filter) {
+        instance.setDataFilter(filter);
+        return this;
+    }
+
+    public JQueryAjaxSettings dataType(JQueryAjaxDataType dataType) {
+        instance.setDataType(dataType.getValue());
         return this;
     }
 
@@ -158,6 +176,41 @@ public class JQueryAjaxSettings {
 
     public JQueryAjaxSettings scriptCharset(String scriptCharset) {
         instance.setScriptCharset(scriptCharset);
+        return this;
+    }
+
+    public <T extends JSObject> JQueryAjaxSettings onSuccess(AjaxSuccessHandler<T> handler) {
+        instance.setSuccessHandler(handler);
+        return this;
+    }
+
+    public JQueryAjaxSettings timeout(int timeout) {
+        instance.setTimeout(timeout);
+        return this;
+    }
+
+    public JQueryAjaxSettings traditional(boolean traditional) {
+        instance.setTraditional(traditional);
+        return this;
+    }
+
+    public JQueryAjaxSettings type(JQueryAjaxRequestMethod type) {
+        instance.setType(type.name());
+        return this;
+    }
+
+    public JQueryAjaxSettings username(String username) {
+        instance.setUsername(username);
+        return this;
+    }
+
+    public JQueryAjaxSettings xhr(AjaxXhrFunctionHandler handler) {
+        instance.setXhr(handler);
+        return this;
+    }
+
+    public JQueryAjaxSettings xhrFields(JSDictonary fields) {
+        instance.setXhrFields(fields);
         return this;
     }
 

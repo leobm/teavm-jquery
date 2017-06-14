@@ -23,6 +23,7 @@ import org.teavm.jso.core.JSFunction;
 import org.teavm.jso.core.JSNumber;
 import org.teavm.jso.core.JSString;
 import org.teavm.jso.dom.html.HTMLDocument;
+import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.xml.Element;
 import org.teavm.jso.dom.xml.Node;
 
@@ -54,28 +55,31 @@ public final class JQuery {
     }
 
     @JSBody(params = { "selector" }, script = "return jQuery(selector)")
-    public static native JQueryObject<?> create(String selector);
+    public static native JQueryObject<?> by(String selector);
 
     @JSBody(params = { "element" }, script = "return jQuery(element)")
-    public static native JQueryObject<?>  create(Node element);
+    public static native JQueryObject<?> by(Node element);
 
     @JSBody(params = { "selector", "context" }, script = "return jQuery(element, context)")
-    public static native JQueryObject<?>  create(String selector, Node context);
+    public static native JQueryObject<?> by(String selector, Node context);
 
     @JSBody(params = { "selector", "context" }, script = "return jQuery(element, context)")
-    public static native JQueryObject<?>  create(String selector, JQueryObject<?> context);
+    public static native JQueryObject<?> by(String selector, JQueryObject<?> context);
 
     @JSBody(params = { "html" }, script = "return jQuery(html)")
-    public static native JQueryObject<?>  createByHtml(String html);
+    public static native JQueryObject<?> of(String html);
 
+    @JSBody(params = { "html" }, script = "return jQuery(html)")
+    public static native JQueryObject<?> of(HTMLElement html);
+    
     @JSBody(params = { "html", "ownerDocument" }, script = "return jQuery(html, ownerDocument)")
-    public static native JQueryObject<?>  createByHtml(String html, HTMLDocument ownerDocument);
+    public static native JQueryObject<?> of(String html, HTMLDocument ownerDocument);
 
     @JSBody(params = { "url" }, script = "return jQuery.getJSON(url)")
-    public static native JQueryObject<?>  getJSON(String url);
+    public static native JQueryObject<?> getJSON(String url);
 
     @JSBody(params = { "url", "data" }, script = "return jQuery.getJSON(url, data)")
-    public static native JQueryObject<?>  getJSON(String url, JSObject data);
+    public static native JQueryObject<?> getJSON(String url, JSObject data);
 
     @JSBody(params = { "url", "handler" }, script = "return jQuery.getJSON(url, handler)")
     public static native JQueryXHR getJSON(String url, AjaxSuccessHandler<JSObject> handler);
@@ -107,10 +111,8 @@ public final class JQuery {
     @JSBody(params = { "dataType", "handler" }, script = "return jQuery.ajaxTransport(dataType, handler)")
     public static native void ajaxTransport(String dataType, JQueryAjaxTransportHandler handler);
 
-    @JSBody(params = { "url", "data", "success",
-            "dataType" }, script = "return jQuery.get(url, data, success, dataType )")
-    public static native JQueryXHR get(String url, JSObject data, AjaxSuccessHandler<? extends JSObject> success,
-            String dataType);
+    @JSBody(params = { "url", "data", "success", "dataType" }, script = "return jQuery.get(url, data, success, dataType )")
+    public static native JQueryXHR get(String url, JSObject data, AjaxSuccessHandler<? extends JSObject> success, String dataType);
 
     @JSBody(params = { "url", "data", "success" }, script = "return jQuery.get(url, data, success )")
     public static native JQueryXHR get(String url, JSObject data, AjaxSuccessHandler<? extends JSObject> success);
@@ -124,10 +126,8 @@ public final class JQuery {
     @JSBody(params = { "url" }, script = "return jQuery.get(url)")
     public static native JQueryXHR get(String url);
 
-    @JSBody(params = { "url", "data", "success",
-            "dataType" }, script = "return jQuery.post(url, data, success, dataType )")
-    public static native JQueryXHR post(String url, JSObject data, AjaxSuccessHandler<? extends JSObject> success,
-            String dataType);
+    @JSBody(params = { "url", "data", "success", "dataType" }, script = "return jQuery.post(url, data, success, dataType )")
+    public static native JQueryXHR post(String url, JSObject data, AjaxSuccessHandler<? extends JSObject> success, String dataType);
 
     @JSBody(params = { "url", "data", "success" }, script = "return jQuery.post(url, data, success )")
     public static native JQueryXHR post(String url, JSObject data, AjaxSuccessHandler<? extends JSObject> success);
@@ -162,12 +162,10 @@ public final class JQuery {
     @JSBody(params = { "array", "callback" }, script = "return jQuery.each(array, callback)")
     public static native JSObject each(JSArray<JSObject> array, JSFunctor2<JSNumber, JSObject, JSBoolean> callback);
 
-    @JSBody(params = { "target", "source",
-            "sourceN" }, script = "var args=[target, source]; args.push.apply(args, sourceN); return jQuery.extend.apply(null, args)")
+    @JSBody(params = { "target", "source", "sourceN" }, script = "var args=[target, source]; args.push.apply(args, sourceN); return jQuery.extend.apply(null, args)")
     public static native JSObject extend(JSObject target, JSObject source, JSObject... sourceN);
 
-    @JSBody(params = { "deep", "target", "source",
-            "sourceN" }, script = "var args=[deep, target, source]; args.push.apply(args, sourceN); return jQuery.extend.apply(null, args)")
+    @JSBody(params = { "deep", "target", "source", "sourceN" }, script = "var args=[deep, target, source]; args.push.apply(args, sourceN); return jQuery.extend.apply(null, args)")
     public static native JSObject extend(boolean deep, JSObject target, JSObject source, JSObject... sourceN);
 
     @JSBody(params = { "code" }, script = "return jQuery.globalEval(code)")
@@ -227,8 +225,7 @@ public final class JQuery {
     @JSBody(params = { "data", "context" }, script = "return jQuery.parseHTML(data, context)")
     public static native JSArray<Node> parseHTML(String data, Element context);
 
-    @JSBody(params = { "data", "context",
-            "keepScripts" }, script = "return jQuery.parseHTML(data, context, keepScripts)")
+    @JSBody(params = { "data", "context", "keepScripts" }, script = "return jQuery.parseHTML(data, context, keepScripts)")
     public static native JSArray<Node> parseHTML(String data, Element context, boolean keepScripts);
 
     @JSBody(params = { "json" }, script = "return jQuery.parseJSON(json)")
@@ -243,12 +240,10 @@ public final class JQuery {
     @JSBody(params = { "element", "queueName" }, script = "return jQuery.queue(element, queueName)")
     public static native JSArray<JSObject> queue(Element element, String queueName);
 
-    @JSBody(params = { "element", "queueName",
-            "newQueue" }, script = "return jQuery.queue(element, queueName, newQueue)")
+    @JSBody(params = { "element", "queueName", "newQueue" }, script = "return jQuery.queue(element, queueName, newQueue)")
     public static native JQueryObject<?> queue(Element element, String queueName, JSArray<JSVoidFunctor0> newQueue);
 
-    @JSBody(params = { "element", "queueName",
-            "callback" }, script = "return jQuery.queue(element, queueName, callback)")
+    @JSBody(params = { "element", "queueName", "callback" }, script = "return jQuery.queue(element, queueName, callback)")
     public static native JQueryObject<?> queue(Element element, String queueName, JSVoidFunctor0 callback);
 
     @JSBody(params = { "str" }, script = "return jQuery.trim(str)")
@@ -275,8 +270,7 @@ public final class JQuery {
     @JSBody(params = { "context", "name" }, script = "return jQuery.proxy(context, name)")
     public static native JSFunction proxy(JSObject context, String name);
 
-    @JSBody(params = { "funct", "context",
-            "additionalArguments" }, script = "return jQuery.proxy.apply(null, [funct, context].concat(additionalArguments));")
+    @JSBody(params = { "funct", "context", "additionalArguments" }, script = "return jQuery.proxy.apply(null, [funct, context].concat(additionalArguments));")
     public static native JSFunction proxy(JSFunction funct, JSObject context, JSObject... additionalArguments);
 
     @JSBody(params = { "hold" }, script = "return jQuery.holdReady(hold)")
@@ -292,7 +286,8 @@ public final class JQuery {
     private static native JQueryCallbacks Callbacks(String flags);
 
     public static JQueryCallbacks Callbacks(JQueryCallbacksFlag... flags) {
-        return JQuery.Callbacks(JSArrayUtils.of(flags, value -> JSString.valueOf(value.getValue())).join(" "));
+        return JQuery.Callbacks(JSArrayUtils.of(flags, value -> JSString.valueOf(value.getValue()))
+                                            .join(" "));
     }
 
     @JSBody(params = {}, script = "return jQuery.fx")
